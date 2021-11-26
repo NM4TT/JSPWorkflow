@@ -9,13 +9,13 @@
     </head>
     <body>
         
+        <%%>
+        
         <nav class="navbar navbar-dark bg-dark">
             <div style="left:1400px;" class="dropdown">
-                <a id="" style="color: white" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cuenta</a>
+                <a id="" style="color: white" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sesion</a>
                 <div class="dropdown-menu text-center">
-                    <a>${nombre}</a> <br>
-                    <a>${rol}</a> <br>
-                    <a>${correo}</a> <br>
+                    <a href="InfoCuenta.jsp">Cuenta</a> <br>
                     <div class="dropdown-divider"></div>
                     <a style="color: black" href="index.jsp" style="color: white" class="dropdown-item">Salir</a>
                 </div>

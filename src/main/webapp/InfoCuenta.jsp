@@ -13,9 +13,9 @@
         
         <nav class="navbar navbar-dark bg-dark">
             <div style="left:1400px;" class="dropdown">
-                <a id="" style="color: white" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sesion</a>
+                <a id="" style="color: white" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cuenta</a>
                 <div class="dropdown-menu text-center">
-                    <a href="InfoCuenta.jsp">Cuenta</a> <br>
+                    <a href="">Principal</a> <br>
                     <div class="dropdown-divider"></div>
                     <a style="color: black" href="index.jsp" style="color: white" class="dropdown-item">Salir</a>
                 </div>

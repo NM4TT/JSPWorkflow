@@ -10,7 +10,7 @@
     <body>
         
         <div class="contenedor">
-          <div id="inicioSesion">
+            <div style="margin-top: 230px" id="inicioSesion">
 
             <!-- Titulo -->
             <div>
