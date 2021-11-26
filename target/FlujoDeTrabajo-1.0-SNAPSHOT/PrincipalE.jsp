@@ -10,10 +10,8 @@
     <body>
         
         <nav class="navbar navbar-dark bg-dark">
-            <a style="color: white" class="navbar-toggler"><span class="navbar-toggler-icon"></span>Home</a>
-        
-            <div class="dropdown">
-                <a style="color: white" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cuenta</a>
+            <div style="left:1400px;" class="dropdown">
+                <a id="" style="color: white" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cuenta</a>
                 <div class="dropdown-menu text-center">
                     <a>${nombre}</a> <br>
                     <a>${rol}</a> <br>
@@ -26,7 +24,7 @@
         
         <div class="container mt-4">
             
-            <h1>Bienvenido Empleado</h1>
+            <h1>Bienvenido ${nombre}</h1>
             
         </div>
         

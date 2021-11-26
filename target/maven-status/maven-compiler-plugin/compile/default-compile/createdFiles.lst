@@ -1,0 +1,6 @@
+modelo\Solicitud$TipoSolicitud.class
+modelo\Trabajador$TipoTrabajador.class
+modelo\Trabajador.class
+modelo\Solicitud.class
+controlador\Controlador.class
+modelo\EntidadQueryable.class

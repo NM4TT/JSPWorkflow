@@ -33,6 +33,8 @@ public class Controlador extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        request.getSession().setAttribute("avisoSesion", "");
+        
         String accion = request.getParameter("sesion");
         
         if (accion.equals("Iniciar Sesion")) {
