@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 @WebServlet(name = "Controlador", urlPatterns = {"/Controlador"})
 public class Controlador extends HttpServlet {
 
-    static Trabajador trabajador = new Trabajador();
-    static Solicitud solicitud = new Solicitud();
+    public static Trabajador trabajador = new Trabajador();
+    public static Solicitud solicitud = new Solicitud();
     static boolean sesionIniciada = false;
     
     /**

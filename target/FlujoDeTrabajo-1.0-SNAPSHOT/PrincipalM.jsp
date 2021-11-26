@@ -94,9 +94,9 @@
                         <hr>
                         <div class="row">
                           <div class="col-sm-12">
-                            <a class="btn btn-info " href="AdminActividades.jsp">Administrar Actividades</a>
-                            <a class="btn btn-info " href="RevSolicitudes.jsp">Revisar Solicitudes</a>
-                            <a class="btn btn-info " href="AdminEmpleados.jsp">Administrar Empleados</a>
+                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarActividades.jsp">Administrar Actividades</a>
+                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarSolicitudes.jsp">Revisar Solicitudes</a>
+                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarEmpleados.jsp">Administrar Empleados</a>
                           </div>
                         </div>
                       </div>

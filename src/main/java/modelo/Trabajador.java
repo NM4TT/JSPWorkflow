@@ -1,14 +1,13 @@
 package modelo;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
 public class Trabajador extends EntidadQueryable {
 
-    protected enum TipoTrabajador {
-        EMPLEADO,MANAGER
-    }
     
     //Tabla en base de datos
     public static final String BD_TABLA = "trabajadores";
@@ -197,6 +196,36 @@ public class Trabajador extends EntidadQueryable {
         
         return sesionIniciada;        
         
+    }
+    
+    public List<Trabajador> traerEmpleados(){
+        Trabajador trabajador = new Trabajador();
+        List<Trabajador> lista = new ArrayList<>();
+        
+        String sql = "SELECT * FROM trabajadores WHERE Tipo = ?;";
+        
+        try {
+            Connection cn = conectar();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, "EMPLEADO");
+            
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next()){
+                this.asignarPrimerNombre(rs.getString("Nombre"));
+                this.asignarPrimerApellido(rs.getString("Apellido"));
+                this.asignarFechaNacimiento(rs.getString("Nacimiento"));
+                this.asignarNumeroTelefonico(rs.getString("Telefono"));
+                this.asignarCorreo(rs.getString("Correo"));
+                this.asignarClave(rs.getString("Clave"));
+                lista.add(trabajador);
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("ERROR AL BUSCAR EN BASE DE DATOS " + BD_TABLA + ": \n" + e.getMessage());
+        }
+        
+        return lista;
     }
 
     /**

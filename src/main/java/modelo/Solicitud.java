@@ -5,13 +5,11 @@
 package modelo;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Solicitud extends EntidadQueryable{
 
-    protected enum TipoSolicitud {
-        PETICION,ACTIVIDAD;
-    }
-    
     //Tabla en base de datos
     public static final String BD_TABLA = "solicitudes";
     //Atributos de una solicitud
@@ -19,8 +17,8 @@ public class Solicitud extends EntidadQueryable{
     private String titulo;
     private String tipo;
     private String descripcion;
-    private int recibidorID;
-    private int enviadorID;
+    private int IDSolicitante;
+    private String estatus;
 
     @Override
     public boolean crearEnBd() {
@@ -35,9 +33,9 @@ public class Solicitud extends EntidadQueryable{
             pst.setString(1, this.traerTitulo());
             pst.setString(2, this.traerTipo());
             pst.setString(3, this.traerDescripcion());
-            pst.setInt(4, this.traerRecibidorID());
-            pst.setInt(5, this.traerEnviadorID());
-           
+            pst.setInt(4, this.traerIDSolicitante());
+            pst.setString(5,this.traerEstatus());
+            
             pst.execute();
             
             cn.close();
@@ -71,11 +69,12 @@ public class Solicitud extends EntidadQueryable{
                 encontrado = true;
                 
                 while(rs.next()){
+                    this.asignarId(rs.getInt("id"));
                     this.asignarTitulo(rs.getString("Titulo"));
                     this.asignarTipo(rs.getString("Tipo"));
                     this.asignarDescripcion(rs.getString("Descripcion"));
-                    this.asignarRecibidorID(rs.getInt("Recibidor"));
-                    this.asignarEnviadorID(rs.getInt("Enviador"));
+                    this.asignarIDSolicitante(rs.getInt("IDSolicitante"));
+                    this.asignarEstatus(rs.getString("Estatus"));
                 }
                 
             } else {
@@ -97,7 +96,7 @@ public class Solicitud extends EntidadQueryable{
         boolean exito = false;
         Connection cn;
         PreparedStatement pst;
-        String sql = "UPDATE " + BD_TABLA + " SET Titulo = ?, Tipo = ?, Descripcion = ?, Recibidor = ?, Enviador = ? WHERE id=?;";
+        String sql = "UPDATE " + BD_TABLA + " SET Titulo = ?, Tipo = ?, Descripcion = ?, IDSolicitante = ?, Estatus = ? WHERE id=?;";
         
         try {
             cn = conectar();
@@ -105,8 +104,8 @@ public class Solicitud extends EntidadQueryable{
             pst.setString(1, this.traerTitulo());
             pst.setString(2, this.traerTipo());
             pst.setString(3, this.traerDescripcion());
-            pst.setInt(4, this.traerRecibidorID());
-            pst.setInt(5, this.traerEnviadorID());
+            pst.setInt(4, this.traerIDSolicitante());
+            pst.setString(5,this.traerEstatus());
             pst.setInt(6, this.traerId());
             
             
@@ -152,9 +151,106 @@ public class Solicitud extends EntidadQueryable{
         this.asignarTitulo(null);
         this.asignarTipo(null);
         this.asignarDescripcion(null);
-        this.asignarEnviadorID(0);
-        this.asignarRecibidorID(0);
+        this.asignarIDSolicitante(0);
+        this.asignarEstatus(null);
     }
+    
+    public List<Solicitud> traerPeticiones(){
+        Solicitud peticion = new Solicitud();
+        List<Solicitud> lista = new ArrayList<>();
+        
+        String sql = "SELECT * FROM solicitudes WHERE Tipo = 'PETICION';";
+        
+        try {
+            Connection cn = conectar();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next()){
+                peticion.asignarId(rs.getInt("id"));
+                peticion.asignarTitulo(rs.getString("Titulo"));
+                peticion.asignarDescripcion(rs.getString("Descripcion"));
+                peticion.asignarIDSolicitante(rs.getInt("IDSolicitante"));
+                peticion.asignarEstatus(rs.getString("Estatus"));
+                lista.add(peticion);
+            }
+            
+            cn.close();
+            pst.close();
+            rs.close();
+            
+        } catch (SQLException e) {
+            System.err.println("ERROR AL BUSCAR EN BASE DE DATOS " + BD_TABLA + ": \n" + e.getMessage());
+        }
+        
+        return lista;
+    }
+    
+    public List<Solicitud> traerPeticiones(int idSolicitante){
+        Solicitud peticion = new Solicitud();
+        List<Solicitud> lista = new ArrayList<>();
+        
+        String sql = "SELECT * FROM solicitudes WHERE IDSolicitante = ? and Tipo = 'PETICION';";
+        
+        try {
+            Connection cn = conectar();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, idSolicitante);
+            
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next()){
+                peticion.asignarId(rs.getInt("id"));
+                peticion.asignarTitulo(rs.getString("Titulo"));
+                peticion.asignarDescripcion(rs.getString("Descripcion"));
+                peticion.asignarIDSolicitante(idSolicitante);
+                peticion.asignarEstatus(rs.getString("Estatus"));
+                lista.add(peticion);
+            }
+            
+            cn.close();
+            pst.close();
+            rs.close();
+            
+        } catch (SQLException e) {
+            System.err.println("ERROR AL BUSCAR EN BASE DE DATOS " + BD_TABLA + ": \n" + e.getMessage());
+        }
+        
+        return lista;
+    }
+    
+    public List<Solicitud> traerActividades(){
+        Solicitud actividad = new Solicitud();
+        List<Solicitud> lista = new ArrayList<>();
+        
+        String sql = "SELECT * FROM solicitudes WHERE Tipo = 'ACTIVIDAD';";
+        
+        try {
+            Connection cn = conectar();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next()){
+                actividad.asignarId(rs.getInt("id"));
+                actividad.asignarTitulo(rs.getString("Titulo"));
+                actividad.asignarDescripcion(rs.getString("Descripcion"));
+                actividad.asignarIDSolicitante(rs.getInt("IDSolicitante"));
+                actividad.asignarEstatus(rs.getString("Estatus"));
+                lista.add(actividad);
+            }
+            
+            cn.close();
+            pst.close();
+            rs.close();
+            
+        } catch (SQLException e) {
+            System.err.println("ERROR AL BUSCAR EN BASE DE DATOS " + BD_TABLA + ": \n" + e.getMessage());
+        }
+        
+        return lista;
+    }    
     
     /**
      * @return the id
@@ -213,31 +309,31 @@ public class Solicitud extends EntidadQueryable{
     }
 
     /**
-     * @return the recibidorID
+     * @return the IDSolicitante
      */
-    public int traerRecibidorID() {
-        return recibidorID;
+    public int traerIDSolicitante() {
+        return IDSolicitante;
     }
 
     /**
-     * @param recibidorID the recibidorID to asignar
+     * @param recibidorID the IDSolicitante to asignar
      */
-    public void asignarRecibidorID(int recibidorID) {
-        this.recibidorID = recibidorID;
+    public void asignarIDSolicitante(int recibidorID) {
+        this.IDSolicitante = recibidorID;
     }
 
     /**
-     * @return the enviadorID
+     * @return the estatus
      */
-    public int traerEnviadorID() {
-        return enviadorID;
+    public String traerEstatus() {
+        return estatus;
     }
 
     /**
-     * @param enviadorID the enviadorID to asignar
+     * @param estatus the estatus to set
      */
-    public void asignarEnviadorID(int enviadorID) {
-        this.enviadorID = enviadorID;
+    public void asignarEstatus(String estatus) {
+        this.estatus = estatus;
     }
     
 }
