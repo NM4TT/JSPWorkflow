@@ -17,7 +17,6 @@
             <div style="left:1400px;" class="dropdown">
                 <a style="color: white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sesion</a>
                 <div class="dropdown-menu text-center">
-                    <a href="InfoCuenta.jsp">Buzon</a> <br>
                     <div class="dropdown-divider"></div>
                     <a style="color: black" href="index.jsp" style="color: white" class="dropdown-item">Salir</a>
                 </div>
@@ -95,9 +94,9 @@
                         <hr>
                         <div class="row">
                           <div class="col-sm-12">
-                            <a class="btn btn-info " target="__blank" href="EditarCuenta.jsp">Administrar Actividades</a>
-                            <a class="btn btn-info " target="__blank" href="EditarCuenta.jsp">Revisar Solicitudes</a>
-                            <a class="btn btn-info " target="__blank" href="EditarCuenta.jsp">Administrar Empleados</a>
+                            <a class="btn btn-info " href="AdminActividades.jsp">Administrar Actividades</a>
+                            <a class="btn btn-info " href="RevSolicitudes.jsp">Revisar Solicitudes</a>
+                            <a class="btn btn-info " href="AdminEmpleados.jsp">Administrar Empleados</a>
                           </div>
                         </div>
                       </div>
