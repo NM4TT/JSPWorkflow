@@ -15,9 +15,9 @@
             <div class="dropdown">
                 <a style="color: white" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cuenta</a>
                 <div class="dropdown-menu text-center">
-                    <a>Usuario</a> <br>
-                    <a>Rol</a> <br>
-                    <a>Correo</a> <br>
+                    <a>${nombre}</a> <br>
+                    <a>${rol}</a> <br>
+                    <a>${correo}</a> <br>
                     <div class="dropdown-divider"></div>
                     <a style="color: black" href="index.jsp" style="color: white" class="dropdown-item">Salir</a>
                 </div>

@@ -16,9 +16,9 @@ import java.util.logging.Logger;
 @WebServlet(name = "Controlador", urlPatterns = {"/Controlador"})
 public class Controlador extends HttpServlet {
 
-    Trabajador trabajador = new Trabajador();
-    Solicitud solicitud = new Solicitud();
-    boolean sesionIniciada = false;
+    static Trabajador trabajador = new Trabajador();
+    static Solicitud solicitud = new Solicitud();
+    static boolean sesionIniciada = false;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,8 +46,11 @@ public class Controlador extends HttpServlet {
           
             if (sesionIniciada) {
                 
+                request.getSession().setAttribute("nombre", trabajador.traerPrimerNombre() + " " + trabajador.traerPrimerApellido());
+                request.getSession().setAttribute("rol", trabajador.traerTipo());
+                request.getSession().setAttribute("correo", trabajador.traerCorreo());
                 
-                if (trabajador.traerTipo().equals("MANAGER")) {
+                if (trabajador.traerTipo().equals("MANAGER")) {                
                     request.getRequestDispatcher("PrincipalM.jsp").forward(request, response);
                 } else {
                     request.getRequestDispatcher("PrincipalE.jsp").forward(request, response);
@@ -55,6 +58,7 @@ public class Controlador extends HttpServlet {
                 
                 
             } else {
+                request.getSession().setAttribute("avisoSesion", "Error en credenciales. Reintente.");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
 

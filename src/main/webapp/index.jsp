@@ -26,7 +26,7 @@
 
             
             <div id="pieContenedor">
-                <h3>2021</h3>
+                <h3>${avisoSesion}</h3>
             </div>
 
           </div>
