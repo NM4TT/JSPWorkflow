@@ -17,7 +17,7 @@
             <div style="left:1400px;" class="dropdown">
                 <a style="color: white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sesion</a>
                 <div class="dropdown-menu text-center">
-                    <a href="InfoCuenta.jsp">Cuenta</a> <br>
+                    <a href="InfoCuenta.jsp">Buzon</a> <br>
                     <div class="dropdown-divider"></div>
                     <a style="color: black" href="index.jsp" style="color: white" class="dropdown-item">Salir</a>
                 </div>
@@ -26,7 +26,7 @@
         
         <div class="container mt-4">
             
-            <h1>Bienvenido ${nombre}</h1>
+            <h1>Bienvenido</h1>
             
             <div style="margin-top: 60px">
                 <div class="row gutters-sm">
@@ -34,13 +34,11 @@
                     <div class="card">
                       <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                          <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                          <img src="${pageContext.request.contextPath}/images/userimage.png" alt="user" class="rounded-circle" width="150">
                           <div class="mt-3">
-                            <h4>John Doe</h4>
-                            <p class="text-secondary mb-1">Full Stack Developer</p>
-                            <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                            <button class="btn btn-primary">Follow</button>
-                            <button class="btn btn-outline-primary">Message</button>
+                            <h4>${nombre}</h4>
+                            <p class="text-secondary mb-1">${rol}</p>
+                            <p class="text-muted font-size-sm">${correo}</p>
                           </div>
                         </div>
                       </div>
@@ -52,52 +50,54 @@
                       <div class="card-body">
                         <div class="row">
                           <div class="col-sm-3">
-                            <h6 class="mb-0">Full Name</h6>
+                            <h6 class="mb-0">Nombre Completo</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                            Kenneth Valdez
+                            ${nombre}
                           </div>
                         </div>
                         <hr>
                         <div class="row">
                           <div class="col-sm-3">
-                            <h6 class="mb-0">Email</h6>
+                            <h6 class="mb-0">Correo</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                            fip@jukmuh.al
+                            ${correo}
                           </div>
                         </div>
                         <hr>
                         <div class="row">
                           <div class="col-sm-3">
-                            <h6 class="mb-0">Phone</h6>
+                            <h6 class="mb-0">Rol</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                            (239) 816-9029
+                            ${rol}
                           </div>
                         </div>
                         <hr>
                         <div class="row">
                           <div class="col-sm-3">
-                            <h6 class="mb-0">Mobile</h6>
+                            <h6 class="mb-0">Celular</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                            (320) 380-4539
+                            ${telefono}
                           </div>
                         </div>
                         <hr>
                         <div class="row">
                           <div class="col-sm-3">
-                            <h6 class="mb-0">Address</h6>
+                            <h6 class="mb-0">Fecha Nacimiento</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                            Bay Area, San Francisco, CA
+                            ${nacimiento}
                           </div>
                         </div>
                         <hr>
                         <div class="row">
                           <div class="col-sm-12">
-                            <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                            <a class="btn btn-info " target="__blank" href="EditarCuenta.jsp">Administrar Actividades</a>
+                            <a class="btn btn-info " target="__blank" href="EditarCuenta.jsp">Revisar Solicitudes</a>
+                            <a class="btn btn-info " target="__blank" href="EditarCuenta.jsp">Administrar Empleados</a>
                           </div>
                         </div>
                       </div>

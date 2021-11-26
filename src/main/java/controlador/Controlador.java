@@ -51,6 +51,9 @@ public class Controlador extends HttpServlet {
                 request.getSession().setAttribute("nombre", trabajador.traerPrimerNombre() + " " + trabajador.traerPrimerApellido());
                 request.getSession().setAttribute("rol", trabajador.traerTipo());
                 request.getSession().setAttribute("correo", trabajador.traerCorreo());
+                request.getSession().setAttribute("telefono", trabajador.traerNumeroTelefonico());
+                request.getSession().setAttribute("nacimiento", trabajador.traerFechaNacimiento());
+                
                 
                 if (trabajador.traerTipo().equals("MANAGER")) {                
                     request.getRequestDispatcher("PrincipalM.jsp").forward(request, response);
