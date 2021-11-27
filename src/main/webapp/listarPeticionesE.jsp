@@ -19,7 +19,7 @@
             <div style="left:43%;" class="dropdown">
                 <a style="color: white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sesion</a>
                 <div class="dropdown-menu text-center">
-                    <a style="color: black" href="${pageContext.request.contextPath}/PrincipalM.jsp" style="color: white" class="dropdown-item">Inicio</a>
+                    <a style="color: black" href="${pageContext.request.contextPath}/PrincipalE.jsp" style="color: white" class="dropdown-item">Inicio</a>
                     <div class="dropdown-divider"></div>
                     <a style="color: black" href="${pageContext.request.contextPath}/index.jsp" style="color: white" class="dropdown-item">Salir</a>
                 </div>
@@ -27,44 +27,38 @@
         </nav>        
         
         <div class="container">
-            <h1>Empleados</h1>
-            <a class="btn btn-success" href="Controlador?accion=agregarActividad">Agregar Nuevo</a>
+            <h1>Peticiones</h1>
+            <a class="btn btn-success" href="${pageContext.request.contextPath}/agregarPeticion.jsp">Agregar Nueva</a>
             <br>
             <br>
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th class="text-center">ID</th>
-                        <th class="text-center">Nombre</th>
-                        <th class="text-center">Apellido</th>
-                        <th class="text-center">Nacimiento</th>
-                        <th class="text-center">Telefono</th>
-                        <th class="text-center">Correo</th>
-                        <th class="text-center">Clave</th>
+                        <th class="text-center">Titulo</th>
+                        <th class="text-center">Descripcion</th>
+                        <th class="text-center">Estatus</th>
                         <th class="text-center">Accion</th>
                     </tr>
                 </thead>
                 <%
-                    Trabajador empleado=new Trabajador();
-                    List<Trabajador>list=empleado.traerEmpleados();
-                    Iterator<Trabajador>iter=list.iterator();
-                    Trabajador emp=null;
+                    Solicitud peticion=new Solicitud();
+                    List<Solicitud>list=peticion.traerPeticiones(Controlador.trabajadorSesion.traerId());
+                    Iterator<Solicitud>iter=list.iterator();
+                    Solicitud petic=null;
                     while(iter.hasNext()){
-                        emp=iter.next();
+                        petic=iter.next();
                     
                 %>
                 <tbody>
                     <tr>
-                        <td class="text-center"><%= emp.traerId()%></td>
-                        <td class="text-center"><%= emp.traerPrimerNombre()%></td>
-                        <td class="text-center"><%= emp.traerPrimerApellido()%></td>
-                        <td class="text-center"><%= emp.traerFechaNacimiento()%></td>
-                        <td class="text-center"><%= emp.traerNumeroTelefonico()%></td>
-                        <td class="text-center"><%= emp.traerCorreo()%></td>
-                        <td class="text-center"><%= emp.traerClave()%></td>
+                        <td class="text-center"><%= petic.traerId()%></td>
+                        <td class="text-center"><%= petic.traerTitulo()%></td>
+                        <td class="text-center"><%= petic.traerDescripcion()%></td>
+                        <td class="text-center"><%= petic.traerEstatus()%></td>
                         <td class="text-center">
-                            <a class="btn btn-warning" href="Controlador?accion=editar&id=<%= emp.traerId()%>">Editar</a>
-                            <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= emp.traerId()%>">Eliminar</a>
+                            <a class="btn btn-warning" href="Controlador?accion=editar&id=<%= petic.traerId()%>">Editar</a>
+                            <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= petic.traerId()%>">Remover</a>
                         </td>
                     </tr>
                     <%}%>

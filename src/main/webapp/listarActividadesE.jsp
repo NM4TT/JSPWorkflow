@@ -56,7 +56,7 @@
                         <td class="text-center"><%= act.traerDescripcion()%></td>
                         <td class="text-center"><%= act.traerEstatus()%></td>
                         <td class="text-center">
-                            <a class="btn btn-warning" href="Controlador?accion=enproceso&id=<%= act.traerId()%>">En Proceso</a>
+                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/Controlador?accion=enproceso&id=<%= act.traerId()%>">En Proceso</a>
                             <a class="btn btn-danger" href="Controlador?accion=completada&id=<%= act.traerId()%>">Completada</a>
                         </td>
                     </tr>

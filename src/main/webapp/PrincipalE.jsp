@@ -93,8 +93,8 @@
                         <hr>
                         <div class="row">
                           <div class="col-sm-12">
-                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarActividadesE.jsp">Revisar Actividades</a>
-                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarPeticionesE.jsp">Administrar Peticiones</a>
+                            <a class="btn btn-info " href="${pageContext.request.contextPath}/listarActividadesE.jsp">Revisar Actividades</a>
+                            <a class="btn btn-info " href="${pageContext.request.contextPath}/listarPeticionesE.jsp">Administrar Peticiones</a>
                           </div>
                         </div>
                       </div>

@@ -12,12 +12,15 @@ import static modelo.EntidadQueryable.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.jsp.PageContext;
 
 @WebServlet(name = "Controlador", urlPatterns = {"/Controlador"})
 public class Controlador extends HttpServlet {
 
-    public static Trabajador trabajador = new Trabajador();
-    public static Solicitud solicitud = new Solicitud();
+    public static Trabajador trabajadorSesion = new Trabajador();
+    Trabajador empleado = new Trabajador();
+    Solicitud solicitud = new Solicitud();
     static boolean sesionIniciada = false;
     
     /**
@@ -32,30 +35,31 @@ public class Controlador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         request.getSession().setAttribute("avisoSesion", "");
         
-        String accion = request.getParameter("sesion");
+        String accionSesion = request.getParameter("sesion");
+        String accionCrud = request.getParameter("accion");
+        String ventanaAMostrar = "";
         
-        if (accion.equals("Iniciar Sesion")) {
+        if (accionSesion.equals("Iniciar Sesion")) {
             String correo = request.getParameter("txtCorreo");
             String clave = request.getParameter("txtClave");
             
-            trabajador.asignarCorreo(correo);
-            trabajador.asignarClave(clave);
+            trabajadorSesion.asignarCorreo(correo);
+            trabajadorSesion.asignarClave(clave);
             
-            sesionIniciada = trabajador.iniciarSesion();
+            sesionIniciada = trabajadorSesion.iniciarSesion();
           
             if (sesionIniciada) {
                 
-                request.getSession().setAttribute("nombre", trabajador.traerPrimerNombre() + " " + trabajador.traerPrimerApellido());
-                request.getSession().setAttribute("rol", trabajador.traerTipo());
-                request.getSession().setAttribute("correo", trabajador.traerCorreo());
-                request.getSession().setAttribute("telefono", trabajador.traerNumeroTelefonico());
-                request.getSession().setAttribute("nacimiento", trabajador.traerFechaNacimiento());
+                request.getSession().setAttribute("nombre", trabajadorSesion.traerPrimerNombre() + " " + trabajadorSesion.traerPrimerApellido());
+                request.getSession().setAttribute("rol", trabajadorSesion.traerTipo());
+                request.getSession().setAttribute("correo", trabajadorSesion.traerCorreo());
+                request.getSession().setAttribute("telefono", trabajadorSesion.traerNumeroTelefonico());
+                request.getSession().setAttribute("nacimiento", trabajadorSesion.traerFechaNacimiento());
                 
                 
-                if (trabajador.traerTipo().equals("MANAGER")) {                
+                if (trabajadorSesion.traerTipo().equals("MANAGER")) {                
                     request.getRequestDispatcher("PrincipalM.jsp").forward(request, response);
                 } else {
                     request.getRequestDispatcher("PrincipalE.jsp").forward(request, response);
@@ -66,6 +70,95 @@ public class Controlador extends HttpServlet {
                 request.getSession().setAttribute("avisoSesion", "Error en credenciales. Reintente.");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
+            
+         
+            
+            //Agregaciones
+            if(accionCrud.equalsIgnoreCase("Agregar")){
+                empleado.asignarPrimerNombre(request.getParameter("txtNombre").trim());
+                empleado.asignarPrimerNombre(request.getParameter("txtApellido").trim());
+                empleado.asignarPrimerNombre(request.getParameter("txtNacimiento").trim());
+                empleado.asignarPrimerNombre(request.getParameter("txtTelefono").trim());
+                empleado.asignarPrimerNombre(request.getParameter("txtCorreo").trim());
+                empleado.asignarPrimerNombre(request.getParameter("txtClave").trim());
+                empleado.crearEnBd();
+                ventanaAMostrar = "listarEmpleados";
+                
+            } else if(accionCrud.equalsIgnoreCase("Agregar")){
+                solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
+                solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
+                solicitud.asignarTipo("ACTIVIDAD");
+                solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
+                solicitud.asignarEstatus("PENDIENTE");
+                solicitud.crearEnBd();
+                ventanaAMostrar = "listarActividadesM";
+            
+            } else if(accionCrud.equalsIgnoreCase("Agregar")){
+                solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
+                solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
+                solicitud.asignarTipo("PETICION");
+                solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
+                solicitud.asignarEstatus("PENDIENTE");
+                solicitud.crearEnBd();
+                ventanaAMostrar = "listarPeticionesE";
+            }
+            
+            
+           //Ediciones
+            if(accionCrud.equalsIgnoreCase("Actualizar")){
+                empleado.asignarId(Integer.parseInt(request.getParameter("txtid").trim()));
+                empleado.asignarPrimerNombre(request.getParameter("txtNombre").trim());
+                empleado.asignarPrimerNombre(request.getParameter("txtApellido").trim());
+                empleado.asignarPrimerNombre(request.getParameter("txtNacimiento").trim());
+                empleado.asignarPrimerNombre(request.getParameter("txtTelefono").trim());
+                empleado.asignarPrimerNombre(request.getParameter("txtCorreo").trim());
+                empleado.asignarPrimerNombre(request.getParameter("txtClave").trim());
+                empleado.actualizarEnBd();
+                ventanaAMostrar = "listarEmpleados";
+            
+            } else if(accionCrud.equalsIgnoreCase("Actualizar")){
+                solicitud.asignarId(Integer.parseInt(request.getParameter("txtid").trim()));
+                solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
+                solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
+                solicitud.asignarTipo("PETICION");
+                solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
+                solicitud.asignarEstatus("PENDIENTE");
+                solicitud.actualizarEnBd();
+                ventanaAMostrar = "listarPeticionesE";
+            
+            } else if(accionCrud.equalsIgnoreCase("Actualizar")){
+                solicitud.asignarId(Integer.parseInt(request.getParameter("txtid").trim()));
+                solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
+                solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
+                solicitud.asignarTipo("ACTIVIDAD");
+                solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
+                solicitud.asignarEstatus("PENDIENTE");
+                solicitud.crearEnBd();
+                ventanaAMostrar = "listarActividadesM";
+            }
+            
+            
+            //Eliminaciones
+            if(accionCrud.equalsIgnoreCase("Eliminar")){
+                empleado.asignarId(Integer.parseInt(request.getParameter("id")));
+                empleado.eliminarEnBd();
+                ventanaAMostrar = "listarEmpleados";
+            
+            } else if(accionCrud.equalsIgnoreCase("Eliminar")){
+                solicitud.asignarId(Integer.parseInt(request.getParameter("id")));
+                solicitud.eliminarEnBd();
+                ventanaAMostrar = "listarActividadesM";
+            
+            } else if(accionCrud.equalsIgnoreCase("Eliminar")){
+                solicitud.asignarId(Integer.parseInt(request.getParameter("id")));
+                solicitud.eliminarEnBd();
+                ventanaAMostrar = "listarPeticionesE";
+            }
+            
+            PageContext pageContext;
+            RequestDispatcher vista=request.getRequestDispatcher(ventanaAMostrar);
+            vista.forward(request, response);
+            
 
         }
         

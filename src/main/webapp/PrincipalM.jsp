@@ -94,9 +94,9 @@
                         <hr>
                         <div class="row">
                           <div class="col-sm-12">
-                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarActividadesM.jsp">Administrar Actividades</a>
-                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarPeticionesM.jsp">Revisar Peticiones</a>
-                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarEmpleados.jsp">Administrar Empleados</a>
+                            <a class="btn btn-info " href="${pageContext.request.contextPath}/listarActividadesM.jsp">Administrar Actividades</a>
+                            <a class="btn btn-info " href="${pageContext.request.contextPath}/listarPeticionesM.jsp">Revisar Peticiones</a>
+                            <a class="btn btn-info " href="${pageContext.request.contextPath}/listarEmpleados.jsp">Administrar Empleados</a>
                           </div>
                         </div>
                       </div>

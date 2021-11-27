@@ -28,7 +28,7 @@
         
         <div class="container">
             <h1>Actividades</h1>
-            <a class="btn btn-success" href="Controlador?accion=agregarActividad">Agregar Nueva</a>
+            <a class="btn btn-success" href="${pageContext.request.contextPath}/agregarActividad.jsp">Agregar Nueva</a>
             <br>
             <br>
             <table class="table table-bordered">
