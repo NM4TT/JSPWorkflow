@@ -19,7 +19,7 @@
             <div style="left:43%;" class="dropdown">
                 <a style="color: white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sesion</a>
                 <div class="dropdown-menu text-center">
-                    <a style="color: black" href="${pageContext.request.contextPath}/PrincipalE.jsp" style="color: white" class="dropdown-item">Inicio</a>
+                    <a style="color: black" href="${pageContext.request.contextPath}/PrincipalM.jsp" style="color: white" class="dropdown-item">Inicio</a>
                     <div class="dropdown-divider"></div>
                     <a style="color: black" href="${pageContext.request.contextPath}/index.jsp" style="color: white" class="dropdown-item">Salir</a>
                 </div>
@@ -27,37 +27,44 @@
         </nav>        
         
         <div class="container">
-            <h1>Actividades</h1>
+            <h1>Empleados</h1>
+            <a class="btn btn-success" href="Controlador?accion=agregarActividad">Agregar Nuevo</a>
             <br>
             <br>
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th class="text-center">ID</th>
-                        <th class="text-center">Titulo</th>
-                        <th class="text-center">Descripcion</th>
-                        <th class="text-center">Estatus</th>
-                        <th class="text-center">Marcar Como</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Apellido</th>
+                        <th class="text-center">Nacimiento</th>
+                        <th class="text-center">Telefono</th>
+                        <th class="text-center">Correo</th>
+                        <th class="text-center">Clave</th>
+                        <th class="text-center">Accion</th>
                     </tr>
                 </thead>
                 <%
-                    Solicitud actividad=new Solicitud();
-                    List<Solicitud>list=actividad.traerActividades();
-                    Iterator<Solicitud>iter=list.iterator();
-                    Solicitud act=null;
+                    Trabajador empleado=new Trabajador();
+                    List<Trabajador>list=empleado.traerEmpleados();
+                    Iterator<Trabajador>iter=list.iterator();
+                    Trabajador emp=null;
                     while(iter.hasNext()){
-                        act=iter.next();
+                        emp=iter.next();
                     
                 %>
                 <tbody>
                     <tr>
-                        <td class="text-center"><%= act.traerId()%></td>
-                        <td class="text-center"><%= act.traerTitulo()%></td>
-                        <td class="text-center"><%= act.traerDescripcion()%></td>
-                        <td class="text-center"><%= act.traerEstatus()%></td>
+                        <td class="text-center"><%= emp.traerId()%></td>
+                        <td class="text-center"><%= emp.traerPrimerNombre()%></td>
+                        <td class="text-center"><%= emp.traerPrimerApellido()%></td>
+                        <td class="text-center"><%= emp.traerFechaNacimiento()%></td>
+                        <td class="text-center"><%= emp.traerNumeroTelefonico()%></td>
+                        <td class="text-center"><%= emp.traerCorreo()%></td>
+                        <td class="text-center"><%= emp.traerClave()%></td>
                         <td class="text-center">
-                            <a class="btn btn-warning" href="Controlador?accion=enproceso&id=<%= act.traerId()%>">En Proceso</a>
-                            <a class="btn btn-danger" href="Controlador?accion=completada&id=<%= act.traerId()%>">Completada</a>
+                            <a class="btn btn-warning" href="Controlador?accion=editar&id=<%= emp.traerId()%>">Editar</a>
+                            <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= emp.traerId()%>">Eliminar</a>
                         </td>
                     </tr>
                     <%}%>

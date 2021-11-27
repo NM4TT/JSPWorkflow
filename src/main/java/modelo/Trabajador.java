@@ -212,12 +212,13 @@ public class Trabajador extends EntidadQueryable {
             ResultSet rs = pst.executeQuery();
             
             while(rs.next()){
-                this.asignarPrimerNombre(rs.getString("Nombre"));
-                this.asignarPrimerApellido(rs.getString("Apellido"));
-                this.asignarFechaNacimiento(rs.getString("Nacimiento"));
-                this.asignarNumeroTelefonico(rs.getString("Telefono"));
-                this.asignarCorreo(rs.getString("Correo"));
-                this.asignarClave(rs.getString("Clave"));
+                trabajador.asignarId(rs.getInt("id"));
+                trabajador.asignarPrimerNombre(rs.getString("Nombre"));
+                trabajador.asignarPrimerApellido(rs.getString("Apellido"));
+                trabajador.asignarFechaNacimiento(rs.getString("Nacimiento"));
+                trabajador.asignarNumeroTelefonico(rs.getString("Telefono"));
+                trabajador.asignarCorreo(rs.getString("Correo"));
+                trabajador.asignarClave(rs.getString("Clave"));
                 lista.add(trabajador);
             }
             

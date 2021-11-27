@@ -14,11 +14,11 @@
         
         <nav class="navbar navbar-dark bg-dark">
 
-            <div style="left:1400px;" class="dropdown">
+            <div style="left:88%;" class="dropdown">
                 <a style="color: white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sesion</a>
                 <div class="dropdown-menu text-center">
                     <div class="dropdown-divider"></div>
-                    <a style="color: black" href="index.jsp" style="color: white" class="dropdown-item">Salir</a>
+                    <a style="color: black" href="${pageContext.request.contextPath}/index.jsp" style="color: white" class="dropdown-item">Salir</a>
                 </div>
             </div>
         </nav>
@@ -94,8 +94,8 @@
                         <hr>
                         <div class="row">
                           <div class="col-sm-12">
-                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarActividades.jsp">Administrar Actividades</a>
-                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarSolicitudes.jsp">Revisar Solicitudes</a>
+                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarActividadesM.jsp">Administrar Actividades</a>
+                            <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarPeticionesM.jsp">Revisar Peticiones</a>
                             <a class="btn btn-info " href="${pageContext.request.contextPath}/cruds/listarEmpleados.jsp">Administrar Empleados</a>
                           </div>
                         </div>
