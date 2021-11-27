@@ -23,30 +23,28 @@
                         <th class="text-center">ID</th>
                         <th class="text-center">Titulo</th>
                         <th class="text-center">Descripcion</th>
-                        <th class="text-center">ID Solicitante</th>
                         <th class="text-center">Estatus</th>
                         <th class="text-center">Accion</th>
                     </tr>
                 </thead>
                 <%
-                    Solicitud solicitud=new Solicitud();
-                    List<Solicitud>list=solicitud.traerActividades();
+                    Solicitud actividad=new Solicitud();
+                    List<Solicitud>list=actividad.traerActividades();
                     Iterator<Solicitud>iter=list.iterator();
-                    Solicitud solic=null;
+                    Solicitud act=null;
                     while(iter.hasNext()){
-                        solic=iter.next();
+                        act=iter.next();
                     
                 %>
                 <tbody>
                     <tr>
-                        <td class="text-center"><%= solic.traerId()%></td>
-                        <td class="text-center"><%= solic.traerTitulo()%></td>
-                        <td><%= solic.traerDescripcion()%></td>
-                        <td><%= solic.traerIDSolicitante()%></td>
-                        <td><%= solic.traerEstatus()%></td>
+                        <td class="text-center"><%= act.traerId()%></td>
+                        <td class="text-center"><%= act.traerTitulo()%></td>
+                        <td><%= act.traerDescripcion()%></td>
+                        <td><%= act.traerEstatus()%></td>
                         <td class="text-center">
-                            <a class="btn btn-warning" href="Controlador?accion=editar&id=<%= solic.traerId()%>">Editar</a>
-                            <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= solic.traerId()%>">Remove</a>
+                            <a class="btn btn-warning" href="Controlador?accion=editar&id=<%= act.traerId()%>">Editar</a>
+                            <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= act.traerId()%>">Eliminar</a>
                         </td>
                     </tr>
                     <%}%>
