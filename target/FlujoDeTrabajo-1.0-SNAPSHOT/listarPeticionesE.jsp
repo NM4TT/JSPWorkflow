@@ -29,7 +29,8 @@
         <div class="container">
             <h1>Peticiones</h1>
             <a class="btn btn-success" href="${pageContext.request.contextPath}/agregarPeticion.jsp">Agregar Nueva</a>
-            <br>
+            <br><br>
+            <div>${estadoDeProceso}</div>
             <br>
             <table class="table table-bordered">
                 <thead>
@@ -42,13 +43,8 @@
                     </tr>
                 </thead>
                 <%
-                    Solicitud peticion=new Solicitud();
-                    List<Solicitud>list=peticion.traerPeticiones(Controlador.trabajadorSesion.traerId());
-                    Iterator<Solicitud>iter=list.iterator();
-                    Solicitud petic=null;
-                    while(iter.hasNext()){
-                        petic=iter.next();
-                    
+                    List<Solicitud>list=Solicitud.traerPeticiones(Controlador.trabajadorSesion.traerId());
+                    for(Solicitud petic : list){
                 %>
                 <tbody>
                     <tr>
@@ -61,7 +57,9 @@
                             <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= petic.traerId()%>">Remover</a>
                         </td>
                     </tr>
-                    <%}%>
+                    <%
+                        }
+                    %>
                 </tbody>
             </table>
 

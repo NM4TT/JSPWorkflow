@@ -18,7 +18,7 @@
                 <a style="color: white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sesion</a>
                 <div class="dropdown-menu text-center">
                     <div class="dropdown-divider"></div>
-                    <a style="color: black" href="${pageContext.request.contextPath}/index.jsp" style="color: white" class="dropdown-item">Salir</a>
+                    <a style="color: black" href="${pageContext.request.contextPath}/index.jsp" name = "cerroSesion" value = "Salir" style="color: white" class="dropdown-item">Salir</a>
                 </div>
             </div>
         </nav>

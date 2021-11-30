@@ -111,6 +111,7 @@ public class Trabajador extends EntidadQueryable {
             pst.setString(7, this.traerClave());
             pst.setInt(8, this.traerId());
             
+            pst.executeUpdate();
             
             cn.close();
             pst.close();
@@ -134,6 +135,8 @@ public class Trabajador extends EntidadQueryable {
             Connection cn = conectar();
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, this.traerId());
+            
+            pst.executeUpdate();
             
             cn.close();
             pst.close();
@@ -198,29 +201,32 @@ public class Trabajador extends EntidadQueryable {
         
     }
     
-    public List<Trabajador> traerEmpleados(){
-        Trabajador trabajador = new Trabajador();
+    public static List<Trabajador> traerEmpleados(){
         List<Trabajador> lista = new ArrayList<>();
         
-        String sql = "SELECT * FROM trabajadores WHERE Tipo = ?;";
+        String sql = "SELECT * FROM trabajadores WHERE Tipo = 'EMPLEADO';";
         
         try {
             Connection cn = conectar();
             PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, "EMPLEADO");
             
             ResultSet rs = pst.executeQuery();
             
             while(rs.next()){
-                trabajador.asignarId(rs.getInt("id"));
-                trabajador.asignarPrimerNombre(rs.getString("Nombre"));
-                trabajador.asignarPrimerApellido(rs.getString("Apellido"));
-                trabajador.asignarFechaNacimiento(rs.getString("Nacimiento"));
-                trabajador.asignarNumeroTelefonico(rs.getString("Telefono"));
-                trabajador.asignarCorreo(rs.getString("Correo"));
-                trabajador.asignarClave(rs.getString("Clave"));
-                lista.add(trabajador);
+                Trabajador t = new Trabajador();
+                t.asignarId(rs.getInt("id"));
+                t.asignarPrimerNombre(rs.getString("Nombre"));
+                t.asignarPrimerApellido(rs.getString("Apellido"));
+                t.asignarFechaNacimiento(rs.getString("Nacimiento"));
+                t.asignarNumeroTelefonico(rs.getString("Telefono"));
+                t.asignarCorreo(rs.getString("Correo"));
+                t.asignarClave(rs.getString("Clave"));
+                lista.add(t);
             }
+            
+            cn.close();
+            pst.close();
+            rs.close();
             
         } catch (SQLException e) {
             System.err.println("ERROR AL BUSCAR EN BASE DE DATOS " + BD_TABLA + ": \n" + e.getMessage());
@@ -228,6 +234,7 @@ public class Trabajador extends EntidadQueryable {
         
         return lista;
     }
+    
 
     /**
      * @return the id

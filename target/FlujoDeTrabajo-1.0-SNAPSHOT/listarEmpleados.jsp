@@ -1,5 +1,4 @@
 
-<%@page import="java.util.Iterator"%>
 <%@page import="modelo.*"%>
 <%@page import="controlador.*"%>
 <%@page import="java.util.List"%>
@@ -29,7 +28,8 @@
         <div class="container">
             <h1>Empleados</h1>
             <a class="btn btn-success" href="${pageContext.request.contextPath}/agregarEmpleado.jsp">Agregar Nuevo</a>
-            <br>
+            <br><br>
+            <div>${estadoDeProceso}</div>
             <br>
             <table class="table table-bordered">
                 <thead>
@@ -45,13 +45,8 @@
                     </tr>
                 </thead>
                 <%
-                    Trabajador empleado=new Trabajador();
-                    List<Trabajador>list=empleado.traerEmpleados();
-                    Iterator<Trabajador>iter=list.iterator();
-                    Trabajador emp=null;
-                    while(iter.hasNext()){
-                        emp=iter.next();
-                    
+                    List<Trabajador>list=Trabajador.traerEmpleados();
+                    for(Trabajador emp : list){
                 %>
                 <tbody>
                     <tr>
@@ -67,7 +62,9 @@
                             <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= emp.traerId()%>">Eliminar</a>
                         </td>
                     </tr>
-                    <%}%>
+                    <%
+                       }
+                    %>
                 </tbody>
             </table>
 

@@ -30,10 +30,12 @@
                     <input class="form-control" type="text" name="txtTitulo"><br>
                     Descripcion:<br>
                     <input class="form-control" type="text" name="txtDescripcion"><br>
-                    <input class="btn btn-primary" type="submit" name="accion" value="Agregar">
+                    <input class="btn btn-primary" type="submit" name="accion" value="Agregar Peticion">
                     <a href="${pageContext.request.contextPath}/listarPeticionesE.jsp">Regresar</a>
-                </form>
+                </form> <br>
             </div>
+                
+                <div>${estadoDeProceso}</div>
 
         </div>
         

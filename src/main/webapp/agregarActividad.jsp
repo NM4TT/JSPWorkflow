@@ -15,7 +15,7 @@
             <div style="left:43%;" class="dropdown">
                 <a style="color: white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sesion</a>
                 <div class="dropdown-menu text-center">
-                    <a style="color: black" href="${pageContext.request.contextPath}/PrincipalE.jsp" style="color: white" class="dropdown-item">Inicio</a>
+                    <a style="color: black" href="${pageContext.request.contextPath}/PrincipalM.jsp" style="color: white" class="dropdown-item">Inicio</a>
                     <div class="dropdown-divider"></div>
                     <a style="color: black" href="${pageContext.request.contextPath}/index.jsp" style="color: white" class="dropdown-item">Salir</a>
                 </div>
@@ -30,10 +30,12 @@
                     <input class="form-control" type="text" name="txtTitulo"><br>
                     Descripcion:<br>
                     <input class="form-control" type="text" name="txtDescripcion"><br>
-                    <input class="btn btn-primary" type="submit" name="accion" value="Agregar">
+                    <input class="btn btn-primary" type="submit" name="accion" value="Agregar Actividad">
                     <a href="${pageContext.request.contextPath}/listarActividadesM.jsp">Regresar</a>
                 </form>
             </div>
+                
+                <div>${estadoDeProceso}</div>
 
         </div>
         

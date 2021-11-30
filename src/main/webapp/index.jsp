@@ -1,4 +1,5 @@
 
+<%@page import="controlador.Controlador"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,6 +9,11 @@
         <title>Flujo De Trabajo</title>
     </head>
     <body>
+        
+        <%
+            Controlador.trabajadorSesion.limpiarInstancia();
+            Controlador.sesionIniciada = false;
+        %>
         
         <div class="contenedor">
             <div style="margin-top: 230px" id="inicioSesion">

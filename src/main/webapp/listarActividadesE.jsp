@@ -1,5 +1,4 @@
 
-<%@page import="java.util.Iterator"%>
 <%@page import="modelo.*"%>
 <%@page import="controlador.*"%>
 <%@page import="java.util.List"%>
@@ -21,7 +20,7 @@
                 <div class="dropdown-menu text-center">
                     <a style="color: black" href="${pageContext.request.contextPath}/PrincipalE.jsp" style="color: white" class="dropdown-item">Inicio</a>
                     <div class="dropdown-divider"></div>
-                    <a style="color: black" href="${pageContext.request.contextPath}/index.jsp" style="color: white" class="dropdown-item">Salir</a>
+                    <a style="color: black" href="${pageContext.request.contextPath}/index.jsp" name = "cerroSesion" style="color: white" class="dropdown-item">Salir</a>
                 </div>
             </div>
         </nav>        
@@ -41,13 +40,8 @@
                     </tr>
                 </thead>
                 <%
-                    Solicitud actividad=new Solicitud();
-                    List<Solicitud>list=actividad.traerActividades();
-                    Iterator<Solicitud>iter=list.iterator();
-                    Solicitud act=null;
-                    while(iter.hasNext()){
-                        act=iter.next();
-                    
+                    List<Solicitud>list=Solicitud.traerActividades();
+                    for(Solicitud act : list){
                 %>
                 <tbody>
                     <tr>
@@ -60,7 +54,9 @@
                             <a class="btn btn-danger" href="Controlador?accion=completada&id=<%= act.traerId()%>">Completada</a>
                         </td>
                     </tr>
-                    <%}%>
+                    <%
+                        }
+                    %>
                 </tbody>
             </table>
 

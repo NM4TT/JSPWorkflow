@@ -42,13 +42,8 @@
                     </tr>
                 </thead>
                 <%
-                    Solicitud peticion=new Solicitud();
-                    List<Solicitud>list=peticion.traerPeticiones();
-                    Iterator<Solicitud>iter=list.iterator();
-                    Solicitud petic=null;
-                    while(iter.hasNext()){
-                        petic=iter.next();
-                    
+                    List<Solicitud>list=Solicitud.traerPeticiones();
+                    for(Solicitud petic : list){
                 %>
                 <tbody>
                     <tr>
@@ -62,7 +57,9 @@
                             <a class="btn btn-danger" href="Controlador?accion=negar&id=<%= petic.traerId()%>">Negar</a>
                         </td>
                     </tr>
-                    <%}%>
+                    <%
+                        }
+                    %>
                 </tbody>
             </table>
 

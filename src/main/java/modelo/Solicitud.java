@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +20,7 @@ public class Solicitud extends EntidadQueryable{
         boolean exito = false;
         Connection cn;
         PreparedStatement pst;
-        String sql = "INSERT INTO " + BD_TABLA + " (Titulo, Tipo, Descripcion, Recibidor, Enviador) VALUES (?,?,?,?,?);";
+        String sql = "INSERT INTO " + BD_TABLA + " (Titulo, Tipo, Descripcion, IDSolicitante, Estatus) VALUES (?,?,?,?,?);";
         
         try {
             cn = conectar();
@@ -108,6 +103,7 @@ public class Solicitud extends EntidadQueryable{
             pst.setString(5,this.traerEstatus());
             pst.setInt(6, this.traerId());
             
+            pst.executeUpdate();
             
             cn.close();
             pst.close();
@@ -133,6 +129,8 @@ public class Solicitud extends EntidadQueryable{
             pst = cn.prepareStatement(sql);
             pst.setInt(1, this.traerId());
             
+            pst.executeUpdate();
+            
             cn.close();
             pst.close();
             
@@ -155,8 +153,8 @@ public class Solicitud extends EntidadQueryable{
         this.asignarEstatus(null);
     }
     
-    public List<Solicitud> traerPeticiones(){
-        Solicitud peticion = new Solicitud();
+    public static List<Solicitud> traerPeticiones(){
+        
         List<Solicitud> lista = new ArrayList<>();
         
         String sql = "SELECT * FROM solicitudes WHERE Tipo = 'PETICION';";
@@ -168,12 +166,13 @@ public class Solicitud extends EntidadQueryable{
             ResultSet rs = pst.executeQuery();
             
             while(rs.next()){
-                peticion.asignarId(rs.getInt("id"));
-                peticion.asignarTitulo(rs.getString("Titulo"));
-                peticion.asignarDescripcion(rs.getString("Descripcion"));
-                peticion.asignarIDSolicitante(rs.getInt("IDSolicitante"));
-                peticion.asignarEstatus(rs.getString("Estatus"));
-                lista.add(peticion);
+                Solicitud p = new Solicitud();
+                p.asignarId(rs.getInt("id"));
+                p.asignarTitulo(rs.getString("Titulo"));
+                p.asignarDescripcion(rs.getString("Descripcion"));
+                p.asignarIDSolicitante(rs.getInt("IDSolicitante"));
+                p.asignarEstatus(rs.getString("Estatus"));
+                lista.add(p);
             }
             
             cn.close();
@@ -187,8 +186,8 @@ public class Solicitud extends EntidadQueryable{
         return lista;
     }
     
-    public List<Solicitud> traerPeticiones(int idSolicitante){
-        Solicitud peticion = new Solicitud();
+    public static List<Solicitud> traerPeticiones(int idSolicitante){
+        
         List<Solicitud> lista = new ArrayList<>();
         
         String sql = "SELECT * FROM solicitudes WHERE IDSolicitante = ? and Tipo = 'PETICION';";
@@ -201,12 +200,13 @@ public class Solicitud extends EntidadQueryable{
             ResultSet rs = pst.executeQuery();
             
             while(rs.next()){
-                peticion.asignarId(rs.getInt("id"));
-                peticion.asignarTitulo(rs.getString("Titulo"));
-                peticion.asignarDescripcion(rs.getString("Descripcion"));
-                peticion.asignarIDSolicitante(idSolicitante);
-                peticion.asignarEstatus(rs.getString("Estatus"));
-                lista.add(peticion);
+                Solicitud p = new Solicitud();
+                p.asignarId(rs.getInt("id"));
+                p.asignarTitulo(rs.getString("Titulo"));
+                p.asignarDescripcion(rs.getString("Descripcion"));
+                p.asignarIDSolicitante(idSolicitante);
+                p.asignarEstatus(rs.getString("Estatus"));
+                lista.add(p);
             }
             
             cn.close();
@@ -220,8 +220,8 @@ public class Solicitud extends EntidadQueryable{
         return lista;
     }
     
-    public List<Solicitud> traerActividades(){
-        Solicitud actividad = new Solicitud();
+    public static List<Solicitud> traerActividades(){
+        
         List<Solicitud> lista = new ArrayList<>();
         
         String sql = "SELECT * FROM solicitudes WHERE Tipo = 'ACTIVIDAD';";
@@ -233,12 +233,13 @@ public class Solicitud extends EntidadQueryable{
             ResultSet rs = pst.executeQuery();
             
             while(rs.next()){
-                actividad.asignarId(rs.getInt("id"));
-                actividad.asignarTitulo(rs.getString("Titulo"));
-                actividad.asignarDescripcion(rs.getString("Descripcion"));
-                actividad.asignarIDSolicitante(rs.getInt("IDSolicitante"));
-                actividad.asignarEstatus(rs.getString("Estatus"));
-                lista.add(actividad);
+                Solicitud a = new Solicitud();
+                a.asignarId(rs.getInt("id"));
+                a.asignarTitulo(rs.getString("Titulo"));
+                a.asignarDescripcion(rs.getString("Descripcion"));
+                a.asignarIDSolicitante(rs.getInt("IDSolicitante"));
+                a.asignarEstatus(rs.getString("Estatus"));
+                lista.add(a);
             }
             
             cn.close();

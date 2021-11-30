@@ -29,7 +29,8 @@
         <div class="container">
             <h1>Actividades</h1>
             <a class="btn btn-success" href="${pageContext.request.contextPath}/agregarActividad.jsp">Agregar Nueva</a>
-            <br>
+            <br><br>
+            <div>${estadoDeProceso}</div>
             <br>
             <table class="table table-bordered">
                 <thead>
@@ -42,13 +43,8 @@
                     </tr>
                 </thead>
                 <%
-                    Solicitud actividad=new Solicitud();
-                    List<Solicitud>list=actividad.traerActividades();
-                    Iterator<Solicitud>iter=list.iterator();
-                    Solicitud act=null;
-                    while(iter.hasNext()){
-                        act=iter.next();
-                    
+                    List<Solicitud>list=Solicitud.traerActividades();
+                    for(Solicitud act : list){
                 %>
                 <tbody>
                     <tr>
@@ -61,7 +57,9 @@
                             <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= act.traerId()%>">Eliminar</a>
                         </td>
                     </tr>
-                    <%}%>
+                    <%
+                        }
+                    %>
                 </tbody>
             </table>
 
