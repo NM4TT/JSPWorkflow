@@ -29,7 +29,7 @@
                     Titulo:<br>
                     <input class="form-control" type="text" name="txtTitulo"><br>
                     Descripcion:<br>
-                    <textarea class="form-control" rows="6" cols="60" name="txtDescripcion"><br>
+                    <textarea class="form-control" rows="6" cols="60" name="txtDescripcion"></textarea><br>
                     <input class="btn btn-primary" type="submit" name="accion" value="Agregar Peticion">
                     <a href="${pageContext.request.contextPath}/listarPeticionesE.jsp">Regresar</a>
                 </form> 
