@@ -9,7 +9,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        
+
         <nav class="navbar navbar-dark bg-dark">
 
             <div style="left:43%;" class="dropdown">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </nav>        
-        
+
         <div class="container">
             <div class="col-lg-6">
                 <h1>Agregar Peticion</h1>
@@ -29,10 +29,10 @@
                     Titulo:<br>
                     <input class="form-control" type="text" name="txtTitulo"><br>
                     Descripcion:<br>
-                    <input class="form-control" type="text" name="txtDescripcion"><br>
+                    <textarea class="form-control" rows="6" cols="60" name="txtDescripcion"><br>
                     <input class="btn btn-primary" type="submit" name="accion" value="Agregar Peticion">
                     <a href="${pageContext.request.contextPath}/listarPeticionesE.jsp">Regresar</a>
-                </form> <br>
+                </form> 
             </div>
                 
                 <div>${estadoDeProceso}</div>

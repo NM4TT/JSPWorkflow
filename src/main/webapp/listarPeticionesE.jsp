@@ -53,8 +53,8 @@
                         <td class="text-center"><%= petic.traerDescripcion()%></td>
                         <td class="text-center"><%= petic.traerEstatus()%></td>
                         <td class="text-center">
-                            <a class="btn btn-warning" href="Controlador?accion=editar&id=<%= petic.traerId()%>">Editar</a>
-                            <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= petic.traerId()%>">Remover</a>
+                            <a class="btn btn-warning" href="Controlador?accion=editarPeticion&id=<%= petic.traerId()%>">Editar</a>
+                            <a class="btn btn-danger" href="Controlador?accion=eliminarPeticion&id=<%= petic.traerId()%>">Remover</a>
                         </td>
                     </tr>
                     <%

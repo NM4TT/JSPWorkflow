@@ -30,8 +30,8 @@
                     <input class="form-control" type="text" name="txtNombre"><br>
                     Apellido:<br>
                     <input class="form-control" type="text" name="txtApellido"><br>
-                    Fecha de Nacimiento (FORMATO: YYYY-MM-DD):<br>
-                    <input class="form-control" type="text" name="txtNacimiento"><br>
+                    Fecha de Nacimiento:<br>
+                    <input class="form-control" type="date" min="1960-12-31" max="2003-12-31" name="txtNacimiento"><br>
                     Telefono:<br>
                     <input class="form-control" type="text" name="txtTelefono"><br>
                     Correo:<br>

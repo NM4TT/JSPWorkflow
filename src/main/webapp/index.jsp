@@ -11,12 +11,11 @@
     <body>
         
         <%
-            Controlador.trabajadorSesion.limpiarInstancia();
             Controlador.sesionIniciada = false;
         %>
         
         <div class="contenedor">
-            <div style="margin-top: 230px" id="inicioSesion">
+            <div style="margin-top: 3%" id="inicioSesion">
 
             <!-- Titulo -->
             <div>

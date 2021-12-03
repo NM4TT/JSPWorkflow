@@ -53,8 +53,8 @@
                         <td class="text-center"><%= act.traerDescripcion()%></td>
                         <td class="text-center"><%= act.traerEstatus()%></td>
                         <td class="text-center">
-                            <a class="btn btn-warning" href="Controlador?accion=editar&id=<%= act.traerId()%>">Editar</a>
-                            <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= act.traerId()%>">Eliminar</a>
+                            <a class="btn btn-warning" href="Controlador?accion=editarActividad&id=<%= act.traerId()%>">Editar</a>
+                            <a class="btn btn-danger" href="Controlador?accion=eliminarActividad&id=<%= act.traerId()%>">Eliminar</a>
                         </td>
                     </tr>
                     <%
