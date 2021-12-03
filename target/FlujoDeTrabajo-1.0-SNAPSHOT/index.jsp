@@ -12,6 +12,7 @@
         
         <%
             Controlador.sesionIniciada = false;
+            Controlador.trabajadorSesion.limpiarInstancia();
         %>
         
         <div class="contenedor">
