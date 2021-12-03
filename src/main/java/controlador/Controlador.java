@@ -36,207 +36,233 @@ public class Controlador extends HttpServlet {
         request.getSession().setAttribute("estadoDeProceso", "");
 
         String accionSesion = request.getParameter("sesion");
-        String accionCrud = request.getParameter("accion");
+        String accion = request.getParameter("accion");
         String ventanaAMostrar = "";
 
-        //try {
-        if (!sesionIniciada) {
+        try {
+            if (!sesionIniciada) {
 
-            if (accionSesion.equals("Iniciar Sesion")) {
-                String correo = request.getParameter("txtCorreo");
-                String clave = request.getParameter("txtClave");
+                if (accionSesion.equals("Iniciar Sesion")) {
+                    String correo = request.getParameter("txtCorreo");
+                    String clave = request.getParameter("txtClave");
 
-                trabajadorSesion.asignarCorreo(correo);
-                trabajadorSesion.asignarClave(clave);
+                    trabajadorSesion.asignarCorreo(correo);
+                    trabajadorSesion.asignarClave(clave);
 
-                sesionIniciada = trabajadorSesion.iniciarSesion();
+                    sesionIniciada = trabajadorSesion.iniciarSesion();
 
-                if (sesionIniciada) {
+                    if (sesionIniciada) {
 
-                    request.getSession().setAttribute("nombre", trabajadorSesion.traerPrimerNombre() + " " + trabajadorSesion.traerPrimerApellido());
-                    request.getSession().setAttribute("rol", trabajadorSesion.traerTipo());
-                    request.getSession().setAttribute("correo", trabajadorSesion.traerCorreo());
-                    request.getSession().setAttribute("telefono", trabajadorSesion.traerNumeroTelefonico());
-                    request.getSession().setAttribute("nacimiento", trabajadorSesion.traerFechaNacimiento());
+                        request.getSession().setAttribute("nombre", trabajadorSesion.traerPrimerNombre() + " " + trabajadorSesion.traerPrimerApellido());
+                        request.getSession().setAttribute("rol", trabajadorSesion.traerTipo());
+                        request.getSession().setAttribute("correo", trabajadorSesion.traerCorreo());
+                        request.getSession().setAttribute("telefono", trabajadorSesion.traerNumeroTelefonico());
+                        request.getSession().setAttribute("nacimiento", trabajadorSesion.traerFechaNacimiento());
 
-                    if (trabajadorSesion.traerTipo().equals("MANAGER")) {
-                        request.getRequestDispatcher("PrincipalM.jsp").forward(request, response);
+                        if (trabajadorSesion.traerTipo().equals("MANAGER")) {
+                            request.getRequestDispatcher("PrincipalM.jsp").forward(request, response);
+                        } else {
+                            request.getRequestDispatcher("PrincipalE.jsp").forward(request, response);
+                        }
+
                     } else {
-                        request.getRequestDispatcher("PrincipalE.jsp").forward(request, response);
+                        request.getSession().setAttribute("avisoSesion", "Error en credenciales. Reintente.");
+                        request.getRequestDispatcher("index.jsp").forward(request, response);
                     }
 
-                } else {
-                    request.getSession().setAttribute("avisoSesion", "Error en credenciales. Reintente.");
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
 
-            }
+                //Si sesion esta iniciada puede interactuar con el sistema
+            } else {
 
-            //Si sesion esta iniciada puede interactuar con el sistema
-        } else {
+                //Agregaciones
+                if (accion.equalsIgnoreCase("Agregar Empleado")) {
+                    empleado.asignarTipo("EMPLEADO");
+                    empleado.asignarPrimerNombre(request.getParameter("txtNombre").trim());
+                    empleado.asignarPrimerApellido(request.getParameter("txtApellido").trim());
+                    empleado.asignarFechaNacimiento(request.getParameter("txtNacimiento").trim());
+                    empleado.asignarNumeroTelefonico(request.getParameter("txtTelefono").trim());
+                    empleado.asignarCorreo(request.getParameter("txtCorreo").trim());
+                    empleado.asignarClave(request.getParameter("txtClave").trim());
+                    queryOk = empleado.crearEnBd();
 
-            //Agregaciones
-            if (accionCrud.equalsIgnoreCase("Agregar Empleado")) {
-                empleado.asignarTipo("EMPLEADO");
-                empleado.asignarPrimerNombre(request.getParameter("txtNombre").trim());
-                empleado.asignarPrimerApellido(request.getParameter("txtApellido").trim());
-                empleado.asignarFechaNacimiento(request.getParameter("txtNacimiento").trim());
-                empleado.asignarNumeroTelefonico(request.getParameter("txtTelefono").trim());
-                empleado.asignarCorreo(request.getParameter("txtCorreo").trim());
-                empleado.asignarClave(request.getParameter("txtClave").trim());
-                queryOk = empleado.crearEnBd();
+                    if (queryOk) {
+                        ventanaAMostrar = "listarEmpleados.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
+                    } else {
+                        ventanaAMostrar = "agregarEmpleados.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    }
 
-                if (queryOk) {
-                    ventanaAMostrar = "listarEmpleados.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
-                } else {
-                    ventanaAMostrar = "agregarEmpleados.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                } else if (accion.equalsIgnoreCase("Agregar Actividad")) {
+                    solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
+                    solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
+                    solicitud.asignarTipo("ACTIVIDAD");
+                    solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
+                    solicitud.asignarEstatus("PENDIENTE");
+                    queryOk = solicitud.crearEnBd();
+
+                    if (queryOk) {
+                        ventanaAMostrar = "listarActividadesM.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
+                    } else {
+                        ventanaAMostrar = "agregarActividad.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    }
+
+                } else if (accion.equalsIgnoreCase("Agregar Peticion")) {
+                    solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
+                    solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
+                    solicitud.asignarTipo("PETICION");
+                    solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
+                    solicitud.asignarEstatus("PENDIENTE");
+                    queryOk = solicitud.crearEnBd();
+
+                    if (queryOk) {
+                        ventanaAMostrar = "listarPeticionesE.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
+                    } else {
+                        ventanaAMostrar = "agregarPeticion.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    }
                 }
 
-            } else if (accionCrud.equalsIgnoreCase("Agregar Actividad")) {
-                solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
-                solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
-                solicitud.asignarTipo("ACTIVIDAD");
-                solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
-                solicitud.asignarEstatus("PENDIENTE");
-                queryOk = solicitud.crearEnBd();
+                //Ediciones (ventana)
+                if (accion.contains("editar")) {
+                    entidadAinteractuar = Integer.parseInt(request.getParameter("id"));
 
-                if (queryOk) {
-                    ventanaAMostrar = "listarActividadesM.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
-                } else {
-                    ventanaAMostrar = "agregarActividad.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    if (accion.contains("Empleado")) {
+                        ventanaAMostrar = "editarEmpleado.jsp";
+
+                    } else if (accion.contains("Peticion")) {
+                        ventanaAMostrar = "editarPeticion.jsp";
+
+                    } else if (accion.contains("Actividad")) {
+                        ventanaAMostrar = "editarActividad.jsp";
+                    }
+
                 }
 
-            } else if (accionCrud.equalsIgnoreCase("Agregar Peticion")) {
-                solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
-                solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
-                solicitud.asignarTipo("PETICION");
-                solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
-                solicitud.asignarEstatus("PENDIENTE");
-                queryOk = solicitud.crearEnBd();
+                //Actualizaciones (queries)
+                if (accion.equalsIgnoreCase("Actualizar Empleado")) {
+                    empleado.asignarTipo("EMPLEADO");
+                    empleado.asignarId(Integer.parseInt(request.getParameter("txtId")));
+                    empleado.asignarPrimerNombre(request.getParameter("txtNombre").trim());
+                    empleado.asignarPrimerApellido(request.getParameter("txtApellido").trim());
+                    empleado.asignarFechaNacimiento(request.getParameter("txtNacimiento").trim());
+                    empleado.asignarNumeroTelefonico(request.getParameter("txtTelefono").trim());
+                    empleado.asignarCorreo(request.getParameter("txtCorreo").trim());
+                    empleado.asignarClave(request.getParameter("txtClave").trim());
+                    queryOk = empleado.actualizarEnBd();
 
-                if (queryOk) {
-                    ventanaAMostrar = "listarPeticionesE.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
-                } else {
-                    ventanaAMostrar = "agregarPeticion.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
-                }
-            }
+                    if (queryOk) {
+                        ventanaAMostrar = "listarEmpleados.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
+                    } else {
+                        ventanaAMostrar = "editarEmpleado.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    }
 
-            //Ediciones (ventana)
-            if (accionCrud.contains("editar")) {
-                entidadAinteractuar = Integer.parseInt(request.getParameter("id"));
+                } else if (accion.equalsIgnoreCase("Actualizar Peticion")) {
+                    solicitud.asignarId(Integer.parseInt(request.getParameter("txtId")));
+                    solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
+                    solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
+                    solicitud.asignarTipo("PETICION");
+                    solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
+                    solicitud.asignarEstatus("PENDIENTE");
+                    queryOk = solicitud.actualizarEnBd();
 
-                if (accionCrud.contains("Empleado")) {
-                    ventanaAMostrar = "editarEmpleado.jsp";
+                    if (queryOk) {
+                        ventanaAMostrar = "listarPeticionesE.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
+                    } else {
+                        ventanaAMostrar = "editarPeticion.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    }
 
-                } else if (accionCrud.contains("Peticion")) {
-                    ventanaAMostrar = "editarPeticion.jsp";
+                } else if (accion.equalsIgnoreCase("Actualizar Actividad")) {
+                    solicitud.asignarId(Integer.parseInt(request.getParameter("txtId")));
+                    solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
+                    solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
+                    solicitud.asignarTipo("ACTIVIDAD");
+                    solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
+                    solicitud.asignarEstatus("PENDIENTE");
+                    queryOk = solicitud.actualizarEnBd();
 
-                } else if (accionCrud.contains("Actividad")) {
-                    ventanaAMostrar = "editarActividad.jsp";
-                }
-
-            }
-
-            //Actualizaciones (queries)
-            if (accionCrud.equalsIgnoreCase("Actualizar Empleado")) {
-                empleado.asignarTipo("EMPLEADO");
-                empleado.asignarId(Integer.parseInt(request.getParameter("txtId")));
-                empleado.asignarPrimerNombre(request.getParameter("txtNombre").trim());
-                empleado.asignarPrimerApellido(request.getParameter("txtApellido").trim());
-                empleado.asignarFechaNacimiento(request.getParameter("txtNacimiento").trim());
-                empleado.asignarNumeroTelefonico(request.getParameter("txtTelefono").trim());
-                empleado.asignarCorreo(request.getParameter("txtCorreo").trim());
-                empleado.asignarClave(request.getParameter("txtClave").trim());
-                queryOk = empleado.actualizarEnBd();
-
-                if (queryOk) {
-                    ventanaAMostrar = "listarEmpleados.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
-                } else {
-                    ventanaAMostrar = "editarEmpleado.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
-                }
-
-            } else if (accionCrud.equalsIgnoreCase("Actualizar Peticion")) {
-                solicitud.asignarId(Integer.parseInt(request.getParameter("txtId")));
-                solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
-                solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
-                solicitud.asignarTipo("PETICION");
-                solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
-                solicitud.asignarEstatus("PENDIENTE");
-                queryOk = solicitud.actualizarEnBd();
-
-                if (queryOk) {
-                    ventanaAMostrar = "listarPeticionesE.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
-                } else {
-                    ventanaAMostrar = "editarPeticion.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    if (queryOk) {
+                        ventanaAMostrar = "listarActividadesM.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
+                    } else {
+                        ventanaAMostrar = "editarActividad.jsp";
+                        request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    }
                 }
 
-            } else if (accionCrud.equalsIgnoreCase("Actualizar Actividad")) {
-                solicitud.asignarId(Integer.parseInt(request.getParameter("txtId")));
-                solicitud.asignarTitulo(request.getParameter("txtTitulo").trim());
-                solicitud.asignarDescripcion(request.getParameter("txtDescripcion").trim());
-                solicitud.asignarTipo("ACTIVIDAD");
-                solicitud.asignarIDSolicitante(trabajadorSesion.traerId());
-                solicitud.asignarEstatus("PENDIENTE");
-                queryOk = solicitud.actualizarEnBd();
+                //Eliminaciones
+                if (accion.contains("eliminar")) {
+                    entidadAinteractuar = Integer.parseInt(request.getParameter("id"));
 
-                if (queryOk) {
-                    ventanaAMostrar = "listarActividadesM.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
-                } else {
-                    ventanaAMostrar = "editarActividad.jsp";
-                    request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    if (accion.contains("Empleado")) {
+                        ventanaAMostrar = "listarEmpleados.jsp";
+                        empleado.asignarId(entidadAinteractuar);
+                        queryOk = empleado.eliminarEnBd();
+
+                    } else if (accion.contains("Peticion")) {
+                        ventanaAMostrar = "listarPeticionesE.jsp";
+                        solicitud.asignarId(entidadAinteractuar);
+                        queryOk = solicitud.eliminarEnBd();
+
+                    } else if (accion.contains("Actividad")) {
+                        ventanaAMostrar = "listarActividadesM.jsp";
+                        solicitud.asignarId(entidadAinteractuar);
+                        queryOk = solicitud.eliminarEnBd();
+                    }
+
+                    if (queryOk) {
+                        request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
+                    } else {
+                        request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    }
+
                 }
-            }
 
-            //Eliminaciones
-            if (accionCrud.contains("eliminar")) {
-                entidadAinteractuar = Integer.parseInt(request.getParameter("id"));
-
-                if (accionCrud.contains("Empleado")) {
-                    ventanaAMostrar = "listarEmpleados.jsp";
-                    empleado.asignarId(entidadAinteractuar);
-                    queryOk = empleado.eliminarEnBd();
-
-                } else if (accionCrud.contains("Peticion")) {
-                    ventanaAMostrar = "listarPeticionesE.jsp";
+                //Marcados
+                if (accion.contains("marcar")) {
+                    entidadAinteractuar = Integer.parseInt(request.getParameter("id"));
                     solicitud.asignarId(entidadAinteractuar);
-                    queryOk = solicitud.eliminarEnBd();
+                    solicitud.leerEnBd();
 
-                } else if (accionCrud.contains("Actividad")) {
-                    ventanaAMostrar = "listarActividadesM.jsp";
-                    solicitud.asignarId(entidadAinteractuar);
-                    queryOk = solicitud.eliminarEnBd();
-                }
-                
-                if (queryOk) {
-                    request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
-                } else {
-                    request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
-                }
+                    if (accion.contains("Completada")) {
+                        ventanaAMostrar = "listarActividadesE.jsp";
+                        solicitud.asignarEstatus("Completada");
 
+                    } else if (accion.contains("Aprobada")) {
+                        ventanaAMostrar = "listarPeticionesM.jsp";
+                        solicitud.asignarEstatus("Aprobada");
+
+                    } else if (accion.contains("Negada")) {
+                        ventanaAMostrar = "listarPeticionesM.jsp";
+                        solicitud.asignarEstatus("Negada");
+
+                    }
+                    
+                    queryOk = solicitud.actualizarEnBd();
+
+                    if (queryOk) {
+                        request.getSession().setAttribute("estadoDeProceso", "Operacion Realizada.");
+                    } else {
+                        request.getSession().setAttribute("estadoDeProceso", "Error. Reintente.");
+                    }
+
+                }
             }
 
-            //} catch (Exception e) {
-            //if (sesionIniciada) {
-            //    ventanaAMostrar = (trabajadorSesion.traerTipo().equals("MANAGER")) ? "PrincipalM.jsp" : "PrincipalE.jsp";
-            //} else {
-            //    ventanaAMostrar = "index.jsp";
-            //}
-            //}
-            RequestDispatcher vista = request.getRequestDispatcher(ventanaAMostrar);
-            vista.forward(request, response);
-
+        } catch (Exception e) {
+            ventanaAMostrar = "index.jsp";
         }
+
+        RequestDispatcher vista = request.getRequestDispatcher(ventanaAMostrar);
+        vista.forward(request, response);
 
     }
 

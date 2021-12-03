@@ -59,7 +59,7 @@
                         <td class="text-center"><%= emp.traerClave()%></td>
                         <td class="text-center">
                             <a class="btn btn-warning" href="Controlador?accion=editarEmpleado&id=<%= emp.traerId()%>">Editar</a>
-                            <a class="btn btn-danger" href="Controlador?accion=eliminarEmpleado&id=<%= emp.traerId()%>">Eliminar</a>
+                            <a class="btn btn-danger" href="Controlador?accion=eliminarEmpleado&id=<%= emp.traerId()%>">Remover</a>
                         </td>
                     </tr>
                     <%

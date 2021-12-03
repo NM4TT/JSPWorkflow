@@ -53,8 +53,8 @@
                         <td class="text-center"><%= petic.traerIDSolicitante()%></td>
                         <td class="text-center"><%= petic.traerEstatus()%></td>
                         <td class="text-center">
-                            <a class="btn btn-warning" href="Controlador?accion=aprobar&id=<%= petic.traerId()%>">Aprobar</a>
-                            <a class="btn btn-danger" href="Controlador?accion=negar&id=<%= petic.traerId()%>">Negar</a>
+                            <a class="btn btn-warning" href="Controlador?accion=marcarAprobada&id=<%= petic.traerId()%>">Aprobar</a>
+                            <a class="btn btn-danger" href="Controlador?accion=marcarNegada&id=<%= petic.traerId()%>">Negar</a>
                         </td>
                     </tr>
                     <%

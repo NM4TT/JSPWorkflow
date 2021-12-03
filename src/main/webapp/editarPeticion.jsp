@@ -42,6 +42,8 @@
                     <a href="${pageContext.request.contextPath}/listarPeticionesE.jsp">Regresar</a>
                 </form> 
             </div>
+                
+                <div>${estadoDeProceso}</div>
 
         </div>
 
